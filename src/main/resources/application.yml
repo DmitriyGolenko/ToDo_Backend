@@ -1,15 +1,19 @@
+jwt:
+  secret: 213asd21sad21dads21das2d21d3af4faf13f4g56h6k3f
+  lifetime: 5m
+
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://100.109.228.49:5432/course
+    url: jdbc:postgresql://localhost/todo
     username: postgres
     password: 123456
 
 
-
 spring.flyway:
   validate-migration-naming: true
-  url: jdbc:postgresql://100.109.228.49:5432/course
+  url: jdbc:postgresql://localhost:5432/todo
   user: postgres
   password: 123456
   enabled: true

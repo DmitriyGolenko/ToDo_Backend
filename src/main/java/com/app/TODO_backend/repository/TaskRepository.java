@@ -1,7 +1,8 @@
-package com.example.demo.repository;
+package com.app.TODO_backend.repository;
 
-import com.example.demo.model.Task;
+import com.app.TODO_backend.entity.Task;
 import jakarta.transaction.Transactional;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;

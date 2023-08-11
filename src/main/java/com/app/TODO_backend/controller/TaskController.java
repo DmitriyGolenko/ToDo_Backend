@@ -1,17 +1,17 @@
-package com.example.demo.controller;
+package com.app.TODO_backend.controller;
 
-import com.example.demo.model.Task;
-import com.example.demo.repository.TaskRepository;
-import org.apache.tomcat.util.json.JSONParser;
-import org.apache.tomcat.util.json.ParseException;
+import com.app.TODO_backend.entity.Task;
+import com.app.TODO_backend.repository.TaskRepository;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
+@RequiredArgsConstructor
 public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
