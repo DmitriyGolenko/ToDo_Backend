@@ -1,6 +1,6 @@
 jwt:
   secret: 213asd21sad21dads21das2d21d3af4faf13f4g56h6k3f
-  lifetime: 5m
+  lifetime: 30m
 
 
 spring:
@@ -9,6 +9,18 @@ spring:
     url: jdbc:postgresql://localhost/todo
     username: postgres
     password: 123456
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tt7545946@gmail.com
+    password: arngzzalhxbcjbnd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
 
 spring.flyway:

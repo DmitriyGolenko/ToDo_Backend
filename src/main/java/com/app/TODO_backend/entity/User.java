@@ -17,6 +17,8 @@ public class User {
     private String login;
     @Column(name = "password")
     private String password;
+    @Column(name = "mail")
+    private String mail;
 
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),

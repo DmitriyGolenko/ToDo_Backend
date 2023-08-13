@@ -3,8 +3,7 @@ package com.app.TODO_backend.dto;
 import lombok.Data;
 
 @Data
-public class RegistrationUserDto {
-    private String username;
-    private String mail;
+public class ChangeUserPasswordDto {
+    private String token;
     private String password;
 }

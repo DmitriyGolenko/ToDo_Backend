@@ -1,14 +1,20 @@
 package com.app.TODO_backend.controller;
 
+import com.app.TODO_backend.service.EmailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
 @RestController
+@RequiredArgsConstructor
 public class HelloController {
+    private final EmailService emailService;
+
     @GetMapping("/unsecured")
     public String unsecured(){
+        emailService.sendMailMessage("tt7545946@gmail.com","test message","This is test message");
         return "unsecured";
     }
 
