@@ -10,6 +10,8 @@ import com.app.TODO_backend.repository.ChangePasswordTokenRepository;
 import com.app.TODO_backend.service.EmailService;
 import com.app.TODO_backend.service.UserService;
 import com.app.TODO_backend.utils.JwtUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
+@Tag(name = "Auth")
 public class AuthController {
     private final UserService userService;
     private final BCryptPasswordEncoder encoder;
@@ -39,6 +42,7 @@ public class AuthController {
 
 //    tt7545946@gmail.com
 
+    @Operation()
     @PostMapping("/authentication")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest request) {
         log.warn(request.toString());
