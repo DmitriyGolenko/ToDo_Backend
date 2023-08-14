@@ -21,7 +21,6 @@ public class HelloController {
         emailService.sendMailMessage("tt7545946@gmail.com","test message","This is test message");
         return "unsecured";
     }
-
     @GetMapping("/secured")
     public String sayHello(){
         return "secured";
