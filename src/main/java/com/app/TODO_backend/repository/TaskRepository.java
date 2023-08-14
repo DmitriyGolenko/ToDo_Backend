@@ -11,13 +11,14 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TaskRepository extends PagingAndSortingRepository<Task,Long> {
 
     Task save(Task task);
     List<Task> getAllBy();
-    Task getTaskById(long id);
+    Optional<Task> getTaskById(long id);
 
     Task deleteById(long id);
 

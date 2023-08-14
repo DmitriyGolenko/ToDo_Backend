@@ -1,5 +1,6 @@
 package com.app.TODO_backend.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ public class Task {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @org.springframework.data.annotation.Id
+    @Hidden
     private Long id;
     @Schema(description = "Test description")
     @NotNull

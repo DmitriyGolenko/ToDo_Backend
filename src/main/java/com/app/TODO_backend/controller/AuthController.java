@@ -11,6 +11,9 @@ import com.app.TODO_backend.service.EmailService;
 import com.app.TODO_backend.service.UserService;
 import com.app.TODO_backend.utils.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -42,8 +45,10 @@ public class AuthController {
 
 //    tt7545946@gmail.com
 
-    @Operation()
+    @Operation(description = "Получение токена по логину и паролю")
     @PostMapping("/authentication")
+    @ApiResponse(responseCode = "200",description = "token",
+            content = @Content(schema = @Schema(implementation = JwtResponse.class),mediaType = "application/json"))
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest request) {
         log.warn(request.toString());
         try {

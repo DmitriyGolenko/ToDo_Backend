@@ -30,6 +30,3 @@ spring.flyway:
   enabled: true
   locations:
     - 'classpath:db/migration'
-springdoc:
-  api-docs:
-    enabled: true

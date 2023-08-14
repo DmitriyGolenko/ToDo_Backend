@@ -1,5 +1,6 @@
 package com.app.TODO_backend.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import java.util.Collection;
 @Data
 @Entity
 @Table(name = "users")
+@Hidden
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
