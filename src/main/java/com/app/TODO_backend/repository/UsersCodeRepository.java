@@ -1,6 +1,5 @@
 package com.app.TODO_backend.repository;
 
-
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,7 @@ import java.util.Set;
 
 @Component
 @Log4j2
-public class ChangePasswordTokenRepository {
+public class UsersCodeRepository {
     private final Set<String> tokenRep = new HashSet<>();
     private final Random tokenGenerator = new Random();
     public String generateToken(){

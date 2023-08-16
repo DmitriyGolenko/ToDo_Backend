@@ -43,6 +43,13 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
+    public void confirmNewUser(String mail){
+        User user = findByMail(mail).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s not found", mail)));
+        user.setActive(true);
+        userRepository.save(user);
+    }
+
+    @Transactional
     public void changeUserPassword(User user, String password){
         log.warn("User: "+ user.getLogin() + "changed password to " + password);
         User changedUser = findByMail(user.getMail()).orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s not found", user.getLogin())));

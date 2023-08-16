@@ -193,17 +193,17 @@
         }
       }
     },
-    "/registration": {
+    "/reset-confirm": {
       "post": {
         "tags": [
           "Auth"
         ],
-        "operationId": "createNewUser",
+        "operationId": "confirmResetPassword",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationUserDto"
+                "$ref": "#/components/schemas/ChangeUserPasswordDto"
               }
             }
           },
@@ -223,17 +223,17 @@
         }
       }
     },
-    "/confirm-reset": {
+    "/registration": {
       "post": {
         "tags": [
           "Auth"
         ],
-        "operationId": "confirmResetPassword",
+        "operationId": "createNewUser",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChangeUserPasswordDto"
+                "$ref": "#/components/schemas/RegistrationUserDto"
               }
             }
           },
@@ -344,6 +344,45 @@
           }
         }
       }
+    },
+    "/registration-confirm": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Подтверждение пользователя",
+        "operationId": "confirmUserRegistration",
+        "parameters": [
+          {
+            "name": "regCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mail",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -368,13 +407,10 @@
         },
         "description": "Task description"
       },
-      "RegistrationUserDto": {
+      "ChangeUserPasswordDto": {
         "type": "object",
         "properties": {
-          "username": {
-            "type": "string"
-          },
-          "mail": {
+          "token": {
             "type": "string"
           },
           "password": {
@@ -382,10 +418,13 @@
           }
         }
       },
-      "ChangeUserPasswordDto": {
+      "RegistrationUserDto": {
         "type": "object",
         "properties": {
-          "token": {
+          "username": {
+            "type": "string"
+          },
+          "mail": {
             "type": "string"
           },
           "password": {

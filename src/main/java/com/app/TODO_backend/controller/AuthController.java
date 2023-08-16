@@ -6,7 +6,7 @@ import com.app.TODO_backend.dto.JwtResponse;
 import com.app.TODO_backend.dto.RegistrationUserDto;
 import com.app.TODO_backend.entity.User;
 import com.app.TODO_backend.exceptions.ApplicationError;
-import com.app.TODO_backend.repository.ChangePasswordTokenRepository;
+import com.app.TODO_backend.repository.UsersCodeRepository;
 import com.app.TODO_backend.service.EmailService;
 import com.app.TODO_backend.service.UserService;
 import com.app.TODO_backend.utils.JwtUtils;
@@ -25,10 +25,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Optional;
 
 @RestController
@@ -40,7 +38,7 @@ public class AuthController {
     private final BCryptPasswordEncoder encoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
-    private final ChangePasswordTokenRepository changePasswordTokenRepository;
+    private final UsersCodeRepository usersCodeRepository;
     private final EmailService emailService;
 
 //    tt7545946@gmail.com
@@ -75,13 +73,28 @@ public class AuthController {
         user.setMail(registrationUserDto.getMail());
         user.setPassword(registrationUserDto.getPassword());
         userService.createNewUser(user);
+        String token = usersCodeRepository.generateToken();
+        emailService.sendMailMessage(registrationUserDto.getMail(), "Password changing", String.format(
+                "Hi %s, registration code: %s", registrationUserDto.getUsername(), token)
+        );
         return ResponseEntity.ok("User has been created");
     }
 
-    @PostMapping("/confirm-reset")
+    @Operation(description = "Подтверждение пользователя")
+    @GetMapping("/registration-confirm")
+    public ResponseEntity<?> confirmUserRegistration(@RequestParam String regCode, @RequestParam String mail){
+        //TODO переделать UsersTokenRepository
+        if (!usersCodeRepository.verifyToken(regCode)) {
+            return new ResponseEntity<>(new ApplicationError(HttpStatus.NOT_FOUND.value(), "Invalid token"), HttpStatus.NOT_FOUND);
+        }
+        userService.confirmNewUser(mail);
+        return ResponseEntity.ok("User has been confirmed");
+    }
+
+    @PostMapping("/reset-confirm")
     public ResponseEntity<?> confirmResetPassword(@RequestBody ChangeUserPasswordDto dto) {
         log.warn(dto);
-        if (!changePasswordTokenRepository.verifyToken(dto.getToken())) {
+        if (!usersCodeRepository.verifyToken(dto.getToken())) {
             return new ResponseEntity<>(new ApplicationError(HttpStatus.NOT_FOUND.value(), "Invalid token"), HttpStatus.NOT_FOUND);
         }
         String mail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -103,7 +116,7 @@ public class AuthController {
         if (user.isEmpty()) {
             return new ResponseEntity<>(new ApplicationError(HttpStatus.UNAUTHORIZED.value(), "User does not exist"), HttpStatus.UNAUTHORIZED);
         }
-        String token = changePasswordTokenRepository.generateToken();
+        String token = usersCodeRepository.generateToken();
         emailService.sendMailMessage(mail, "Password changing", String.format(
                 "Hi %s, code: %s", user.get().getLogin(), token)
         );

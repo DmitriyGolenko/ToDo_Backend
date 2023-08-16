@@ -21,7 +21,8 @@ public class User {
     private String password;
     @Column(name = "mail")
     private String mail;
-
+    @Column(name = "active")
+    private boolean active;
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
